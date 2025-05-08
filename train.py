@@ -3,6 +3,8 @@ from spacy_utils import tokenize, lemmatize, bag_of_words
 import numpy as np
 
 import torch
+import torch.nn as nn 
+from torch.utils.data import Dataset, DataLoader
 
 with open ('intents.json', 'r') as f:
     intents = json.load(f)
@@ -34,6 +36,25 @@ for (pattern_sequence, tag) in xy:
     
 X_train = np.array(X_train)
 y_train = np.array(y_train)
+
+class ChatDataset(Dataset):
+    def __init__(self):
+        self.n_samples = len(X_train)
+        self.x_data = X_train
+        self.y_data = y_train
+        
+    # access dataset with their index
+    def __getitem__(self, index):
+        return self.x_data[index], self.y_data[index]
+    
+    def __len__(self):
+        return self.n_samples
+    
+# Hyper Parameters
+batch_size = 8
+
+dataset = ChatDataset()
+train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True, num_workers=2)
     
     
 
