@@ -92,5 +92,19 @@ def train():
 if __name__ == "__main__":
     train()
     
+data= {
+    "model_state" : model.state_dict(),
+    "input_size" : input_size,
+    "output_size" : output_size,
+    "hidden_size" : hidden_size,
+    "all_words" : all_words,
+    "tags" : tags
+}
+
+FILE = "data.pth"
+torch.save(data, FILE)
+
+print(f'Training complete! file saved to {FILE}')
+    
 
     
