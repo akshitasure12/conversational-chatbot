@@ -1,3 +1,4 @@
 /iris
 __pycache__/
 .DS_Store
+data.pth
